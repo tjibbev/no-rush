@@ -3,6 +3,7 @@
 import argparse
 import os
 import sys
+from board import Board, visualize
 
 
 if __name__ == "__main__":
@@ -19,3 +20,10 @@ if __name__ == "__main__":
     if not os.path.exists(board_path):
         print(f"board {args.board} does not exist")
         sys.exit(1)
+
+    # Load the Rush Hour board
+    board_visualised = visualize(board_path)
+
+    # Present the Rush Hour board to the user
+    print(board_visualised)
+    print()
