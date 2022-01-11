@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     board_path = f"gameboards/{args.board}.csv"
 
-    # If the puzzle does not exist, exit
+    # If the board does not exist, exit
     if not os.path.exists(board_path):
         print(f"puzzle {args.board} does not exist")
         sys.exit(1)
