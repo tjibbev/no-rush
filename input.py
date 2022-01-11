@@ -31,5 +31,6 @@ if __name__ == "__main__":
 
     # Present the Rush Hour board to the user
     print()
-    print(B.visualize())
+    for row in B.visualize():
+        print(row)
     print()

@@ -5,14 +5,13 @@ from cars import Car
 class Board:
     """The initialisation of the board"""
 
-    def __init__(self, board_path, size):
-        board_grid_row = []
-        for i in range(size):
-            board_grid_row.append('_')
-        
+    def __init__(self, board_path, size):        
         self._board_grid = []
         for i in range(size):
-            self._board_grid.append(board_grid_row)
+            row_list = []
+            for i in range(size):
+                row_list.append('_')
+            self._board_grid.append(row_list)
 
         self._cars = {}
 
@@ -27,15 +26,14 @@ class Board:
 
         for car in self._cars:
             auto = self._cars[car]
-            auto_coords = []
 
             x, y = auto._coord
             if auto._orientation == 'H':
                 for i in range(auto._length):
-                    self._board_grid[x+1][y+1+i] = auto._id
+                    self._board_grid[x-1][y-1+i] = auto._id
             elif auto._orientation == 'V':
                 for i in range(auto._length):
-                    self._board_grid[x+1+i][y+1] = auto._id
+                    self._board_grid[x-1+i][y-1] = auto._id
 
         return self._board_grid
             
