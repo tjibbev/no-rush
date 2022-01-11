@@ -1,1 +1,1 @@
-# Het input gedeelte
+# Het input gedeelte, initialisatie programma.
