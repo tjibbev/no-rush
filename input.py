@@ -17,5 +17,5 @@ if __name__ == "__main__":
 
     # If the board does not exist, exit
     if not os.path.exists(board_path):
-        print(f"puzzle {args.board} does not exist")
+        print(f"board {args.board} does not exist")
         sys.exit(1)
