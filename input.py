@@ -9,7 +9,7 @@ from board import Board, visualize
 if __name__ == "__main__":
     # Argument parser
     parser = argparse.ArgumentParser(description='Solve Rush Hour.')
-    parser.add_argument("board", type=int, help="The board to be solved.")
+    parser.add_argument("board", help="The board to be solved.")
 
     # Parse the command line arguments
     args = parser.parse_args()
