@@ -1,13 +1,19 @@
 # Het input gedeelte, initialisatie programma.
 
 import argparse
+import csv
 import os
 import sys
 from board import Board
+from collections import OrderedDict
 
 
 def test_game(board):
-    # Simple test game that moves cars on input
+    """Simple test game that moves cars on input"""
+
+    # Creat list for the movement path
+    move_path = []
+
     while not(board.game_won()):
         # Prompt for car input
         command = input("> ").upper()
@@ -27,6 +33,7 @@ def test_game(board):
                 for row in board.visualize():
                     print(row)
                 print()
+                move_path.append({'car': carname, 'move': move})
         except IndexError:
             print("Usage: X int")
             print("Make sure the car's initial and the movement integer are seperated by a space!")
@@ -38,6 +45,10 @@ def test_game(board):
     if board.game_won():
         print()
         print("You completed the puzzle!")
+        with open("output.csv", 'w', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=['car', 'move'])
+            writer.writeheader()
+            writer.writerows(move_path)
 
 
 if __name__ == "__main__":
