@@ -1,6 +1,7 @@
 # Visualisering
 import csv
 from cars import Car
+import copy
 
 class Board:
     """Board containing multiple (moveable) cars on a grid"""
@@ -20,17 +21,21 @@ class Board:
                 self._cars[row['car']] = Car(row['car'], row['orientation'], row['col'], row['row'], row['length'])
         
         self._board_grid = []
+        self._empty_grid = []
+
         for i in range(size):
             row_list = []
             for i in range(size):
                 row_list.append(' ')
-            self._board_grid.append(row_list)
+            self._empty_grid.append(row_list)
         
         self.load_board()
         
 
     def load_board(self):
         """Loads all cars to current positions on the board"""
+        self._board_grid = copy.deepcopy(self._empty_grid)
+
         for car in self._cars:
             auto = self._cars[car]
 
@@ -50,20 +55,28 @@ class Board:
 
     def is_valid_move(self, carname, move):
         """Checks if car can be moved"""
-        car = self._cars[carname]
+        try:
+            car = self._cars[carname]
+        except KeyError:
+            return False
+            
         x, y = car._coord
 
         if car._orientation == 'H' and move < 0:
             if all(self._board_grid[x-1][y-1+i] == ' ' for i in range(move, 0)):
                 return True
         elif car._orientation == 'H' and move > 0:
-            if all(self._board_grid[x-1][y-1+i] == ' ' for i in range(car._length, car._length + move)):
+            if y - 1 + move + car._length > len(self._empty_grid):
+                return False
+            elif all(self._board_grid[x-1][y-1+i] == ' ' for i in range(car._length, car._length + move)):
                 return True
         elif car._orientation == 'V' and move < 0:
             if all(self._board_grid[x-1+i][y-1] == ' ' for i in range(move, 0)):
                 return True
         elif car._orientation == 'V' and move > 0:
-            if all(self._board_grid[x-1+i][y-1] == ' ' for i in range(car._length, car._length + move)):
+            if x - 1 + move + car._length > len(self._empty_grid):
+                return False
+            elif all(self._board_grid[x-1+i][y-1] == ' ' for i in range(car._length, car._length + move)):
                 return True
         
         return False
@@ -74,3 +87,16 @@ class Board:
         if self.is_valid_move(carname, move):
             self._cars[carname].move(move)
             self.load_board()
+
+            return True
+
+        return False
+
+    def game_won(self):
+        """Returns true if the red car has cleared traffic"""
+        red = self._cars['X']
+
+        if red._coord[1] == len(self._empty_grid) - 1:
+            return True
+        
+        return False

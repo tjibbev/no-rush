@@ -9,9 +9,10 @@ class Car:
         self._length = int(length)
 
     def move(self, move):
+        x, y = self._coord
         if self._orientation == 'H':
-            self._coord = self._coord + (0, move) 
+            self._coord = (x, y + move) 
         else:
-            self._coord = self._coord + (move, 0)
+            self._coord = (x + move, y)
 
     
