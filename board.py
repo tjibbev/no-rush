@@ -13,6 +13,7 @@ class Board:
         Loads vehicles onto board
         """
 
+        self._size = size
         self._cars = {}
 
         with open(board_path) as file:
@@ -62,22 +63,25 @@ class Board:
             
         x, y = car._coord
 
-        if car._orientation == 'H' and move < 0:
-            if all(self._board_grid[x-1][y-1+i] == ' ' for i in range(move, 0)):
-                return True
-        elif car._orientation == 'H' and move > 0:
-            if y - 1 + move + car._length > len(self._empty_grid):
-                return False
-            elif all(self._board_grid[x-1][y-1+i] == ' ' for i in range(car._length, car._length + move)):
-                return True
-        elif car._orientation == 'V' and move < 0:
-            if all(self._board_grid[x-1+i][y-1] == ' ' for i in range(move, 0)):
-                return True
-        elif car._orientation == 'V' and move > 0:
-            if x - 1 + move + car._length > len(self._empty_grid):
-                return False
-            elif all(self._board_grid[x-1+i][y-1] == ' ' for i in range(car._length, car._length + move)):
-                return True
+        try:
+            if car._orientation == 'H' and move < 0:
+                if all(self._board_grid[x-1][y-1+i] == ' ' for i in range(move, 0)):
+                    return True
+            elif car._orientation == 'H' and move > 0:
+                if y - 1 + move + car._length > len(self._empty_grid):
+                    return False
+                elif all(self._board_grid[x-1][y-1+i] == ' ' for i in range(car._length, car._length + move)):
+                    return True
+            elif car._orientation == 'V' and move < 0:
+                if all(self._board_grid[x-1+i][y-1] == ' ' for i in range(move, 0)):
+                    return True
+            elif car._orientation == 'V' and move > 0:
+                if x - 1 + move + car._length > len(self._empty_grid):
+                    return False
+                elif all(self._board_grid[x-1+i][y-1] == ' ' for i in range(car._length, car._length + move)):
+                    return True
+        except IndexError:
+            return False
         
         return False
 
@@ -100,3 +104,14 @@ class Board:
             return True
         
         return False
+
+    def after_win(self, movepath):
+        """Prints winning status and makes output.csv"""
+        if self.game_won():
+            print()
+            print("You completed the puzzle!")
+            with open("output.csv", 'w', newline='') as file:
+                writer = csv.DictWriter(file, fieldnames=['car', 'move'])
+                writer.writeheader()
+                writer.writerows(movepath)
+
