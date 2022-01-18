@@ -38,3 +38,5 @@ def random_traffic_control(board):
 
     board.after_win(move_path)
 
+    return move_path
+

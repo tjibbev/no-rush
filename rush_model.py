@@ -3,6 +3,7 @@ import csv
 #from msilib.schema import SelfReg
 from cars import Car
 import copy
+import random
 from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.space import SingleGrid
@@ -166,8 +167,8 @@ class RushModel(Model):
     def random_move(self):
         options = self.possibilities()
 
-        car = self.random.choice(list(options.keys()))
-        move = self.random.choice(options[car])
+        car = random.choice(list(options.keys()))
+        move = random.choice(options[car])
 
         self.move_car(car, move)
 
