@@ -6,7 +6,8 @@ import sys
 from board import Board
 from cl_player import test_game
 from algorithms import random_traffic_control
-
+import matplotlib.pyplot as plt
+import numpy as np
 
 if __name__ == "__main__":
     # Argument parser
@@ -31,11 +32,27 @@ if __name__ == "__main__":
     # Load the Rush Hour board
     B = Board(board_path, size)
 
+    image = []
+
     # Present the Rush Hour board to the user
     print()
     for row in B.visualize():
         print(row)
+        row_list = []
+        for position in row:
+            if position in B._color:
+                position = B.color()[position]
+            else:
+                position = (248,248,255)
+            row_list.append(position)
+        image.append(row_list)
     print()
+
+    board=np.array(image)
+    plt.imshow(board)
+    plt.savefig('test.png')
+    plt.show()
+
 
     # Game using command line
     # test_game(B)

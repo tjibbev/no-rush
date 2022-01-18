@@ -1,5 +1,6 @@
 # Visualisering
 import csv
+from string import whitespace
 from cars import Car
 import copy
 
@@ -15,12 +16,23 @@ class Board:
 
         self._size = size
         self._cars = {}
+        self._color = {}
+        list_of_colors = [(0,255,255),(118,238,198),(0,0,255),(255,97,3),(118,238,0),(139,136,120),(104,34,139),(255,20,147),(255,215,0),(3,3,3),(191,239,255),(255,182,193),(238,238,209),(224,102,255),(227,168,105),(255,222,173),(128,128,0),(205,55,0),(152,251,152),(139,139,0),(245,222,179),(255,255,0),(238,130,238),(0,128,128)]
 
         with open(board_path) as file:
             reader = csv.DictReader(file)
             for row in reader:
                 self._cars[row['car']] = Car(row['car'], row['orientation'], row['col'], row['row'], row['length'])
         
+        counter = 0
+
+        for key in self._cars:
+            if key == "X":
+                self._color[key] = (255,0,0)
+            else:
+                self._color[key] = list_of_colors[counter]
+                counter = counter + 1
+
         self._board_grid = []
         self._empty_grid = []
 
@@ -52,6 +64,10 @@ class Board:
     def visualize(self):
         """Returns the board grid"""
         return self._board_grid
+
+
+    def color(self):
+        return self._color
             
 
     def is_valid_move(self, carname, move):
