@@ -1,5 +1,6 @@
 # Visualisering
 import csv
+from statistics import mode
 #from msilib.schema import SelfReg
 from cars import Car
 import copy
@@ -9,9 +10,12 @@ from mesa.time import RandomActivation
 from mesa.space import SingleGrid
 from mesa.datacollection import DataCollector
 
+
 class CarAgent(Agent):
     def __init__(self, unique_id, model, letter, orientation, column, row, length):
         super().__init__(unique_id, model)
+        self.model = model
+        self._id = unique_id
         self._letter = letter 
         self._orientation = orientation
         self._coord = (int(row), int(column))
@@ -24,6 +28,7 @@ class CarAgent(Agent):
         else:
             self._coord = (x + move, y)
 
+
 class RushModel(Model):
     """Board containing multiple (moveable) cars on a grid"""
     def __init__(self, board_path, size):
@@ -32,7 +37,7 @@ class RushModel(Model):
         Creates empty board grid
         Loads vehicles onto board
         """
-        self.grid = SingleGrid(size, size, True)
+        self.grid = SingleGrid(size, size, False)
         self.schedule = RandomActivation(self)
         self.running = True 
 
@@ -50,18 +55,23 @@ class RushModel(Model):
             for row in reader:
                 id += 1
                 car = CarAgent(id, self, row['car'], row['orientation'], row['col'], row['row'], row['length'])
+                self._cars[row['car']] = car
                 self.schedule.add(car)
-                self.grid.place_agent(car, car._coord)
-                
-                #self._cars[row['car']] = Car(row['car'], row['orientation'], row['col'], row['row'], row['length'])
 
-        # create empty board
+                if car._orientation == 'H':
+                    for i in range(car._length):
+                        self.grid.place_agent(car, (car._coord[1] + i - 1, car._coord[0] - 1))
+                else:
+                    for i in range(car._length):
+                        self.grid.place_agent(car, (car._coord[1] - 1, car._coord[0] + i - 1))
+
+        # create empty board grid
         for i in range(size):
             row_list = []
             for i in range(size):
                 row_list.append(' ')
             self._empty_grid.append(row_list)
-        
+
         self.load_board()
         
 
@@ -79,11 +89,6 @@ class RushModel(Model):
             elif auto._orientation == 'V':
                 for i in range(auto._length):
                     self._board_grid[x-1+i][y-1] = auto._id
-
-
-    def visualize(self):
-        """Returns the board grid"""
-        return self._board_grid
             
 
     def is_valid_move(self, carname, move):
@@ -121,12 +126,24 @@ class RushModel(Model):
     def move_car(self, carname, move):
         """Move car if possible"""
         if self.is_valid_move(carname, move):
-            self._cars[carname].move(move)
+            car = self._cars[carname]
+            car.move(move)
             self.load_board()
+
+            for i in range(car._length):
+                self.grid.remove_agent(car)
+
+            if car._orientation == 'H':
+                for i in range(car._length):
+                    self.grid.place_agent(car, (car._coord[1] + i - 1, car._coord[0] - 1))
+            else:
+                for i in range(car._length):
+                    self.grid.place_agent(car, (car._coord[1] - 1, car._coord[0] + i - 1))                
 
             return True
 
         return False
+
 
     def game_won(self):
         """Returns true if the red car has cleared traffic"""
@@ -137,6 +154,7 @@ class RushModel(Model):
         
         return False
 
+
     def after_win(self, movepath):
         """Prints winning status and makes output.csv"""
         if self.game_won():
@@ -146,6 +164,7 @@ class RushModel(Model):
                 writer = csv.DictWriter(file, fieldnames=['car', 'move'])
                 writer.writeheader()
                 writer.writerows(movepath)
+
 
     def possibilities(self):
         """Creates & returns dict containing all possible car movements"""
@@ -176,10 +195,11 @@ class RushModel(Model):
 
 
     def step(self):
-        
+        self.schedule.step()
+
         if not(self.game_won()):
-            car, move = self.random_move()
-            self._move_path.append({'car': car, 'move': move})
+            carname, move = self.random_move()
+            self._move_path.append({'car': carname, 'move': move})
         else:
             self.after_win(self._move_path)
 

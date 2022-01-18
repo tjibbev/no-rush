@@ -1,13 +1,38 @@
-from rush_model import Rush
+from rush_model import RushModel
 from mesa.visualization.modules import CanvasGrid
 from mesa.visualization.ModularVisualization import ModularServer
-from mesa.visualization.modules import ChartModule
+import seaborn as sns
 import argparse
 import os
 import sys
 from board import Board
-from cl_player import test_game
-from algorithms import random_traffic_control
+
+
+list_of_colors = sns.color_palette(n_colors = 60)
+
+
+def letter_to_color(letter):
+    if len(letter) == 2:
+        number = 26 + ord(letter[1]) - 65
+    else:
+        number = ord(letter) - 65
+    
+    return list_of_colors[number]
+
+
+def agent_portrayal(agent):
+    colorset = letter_to_color(agent._letter)
+    r, g, b = int(colorset[0] * 255), int(colorset[1] * 255), int(colorset[2] * 255)
+    color = "#%02x%02x%02x" % (r, g, b)
+
+    portrayal = {"Shape": "circle",
+                "Color": color,
+                "Filled": "true",
+                "Layer": 0,
+                "r": 1}
+
+    return portrayal
+
 
 if __name__ == "__main__":
     # Argument parser
@@ -30,42 +55,11 @@ if __name__ == "__main__":
         size = 12
 
     # Load the Rush Hour board
- #   B = Rush(board_path, size)
+    # B = Rush(board_path, size)
 
-    def agent_portrayal(agent):
-        if agent._letter == 'A':
-            portrayal = {"Shape": "circle",
-                        "Color": "green",
-                        "Filled": "true",
-                        "Layer": 0,
-                        "r": 0.5}
-        
-        elif agent._letter == 'B':
-            portrayal = {"Shape": "circle",
-                        "Color": "red",
-                        "Filled": "true",
-                        "Layer": 0,
-                        "r": 0.5}
+    grid = CanvasGrid(agent_portrayal, size, size, 500, 500)
 
-        elif agent._letter == 'C':
-            portrayal = {"Shape": "circle",
-                        "Color": "blue",
-                        "Filled": "true",
-                        "Layer": 0,
-                        "r": 0.5}
-
-        elif agent._letter == 'D':
-            portrayal = {"Shape": "circle",
-                        "Color": "black",
-                        "Filled": "true",
-                        "Layer": 0,
-                        "r": 0.5}
-
-        return portrayal
-
-    grid = CanvasGrid(agent_portrayal, 100, 100, 500, 500)
-
-    server = ModularServer(Rush,
+    server = ModularServer(RushModel,
                         [grid],
                         "Rush Model",
                         {"board_path": board_path, "size": size})
