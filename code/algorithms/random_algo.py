@@ -29,14 +29,18 @@ def random_move(board):
     return car, move
 
 
-def random_traffic_control(board):
+def random_traffic_control(board, sol_number, best_sol):
+    """Creates a list of all the moves and returns the length of the solution"""
     move_path = []
 
     while not(board.game_won()):
         car, move = random_move(board)
         move_path.append({'car': car, 'move': move})
+        # check if length exceeds best solution's length
+        if int(len(move_path)) > int(best_sol):
+            return 1000
 
-    board.after_win(move_path)
+    sol_length = board.after_win(move_path, sol_number)
 
-    return move_path
+    return sol_length
 
