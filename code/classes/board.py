@@ -122,13 +122,16 @@ class Board:
         
         return False
 
-    def after_win(self, movepath):
-        """Prints winning status and makes output.csv"""
+    def after_win(self, movepath, run_number):
+        """Prints winning status, makes an output.csv and returns the solution length"""
         if self.game_won():
             print()
             print("You completed the puzzle!")
-            with open("output.csv", 'w', newline='') as file:
+            with open(f"output_{run_number}.csv", 'w', newline='') as file:
                 writer = csv.DictWriter(file, fieldnames=['car', 'move'])
                 writer.writeheader()
                 writer.writerows(movepath)
-
+            sol_length = len(movepath)
+            print(f"in {sol_length} steps!")
+        
+        return sol_length
