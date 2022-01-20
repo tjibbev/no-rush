@@ -5,7 +5,7 @@ import seaborn as sns
 import argparse
 import os
 import sys
-from board import Board
+from code.classes.board import Board
 
 
 list_of_colors = sns.color_palette(n_colors = 60)

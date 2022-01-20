@@ -3,9 +3,9 @@
 import argparse
 import os
 import sys
-from board import Board
-from cl_player import test_game
-from algorithms import random_traffic_control
+from code.classes.board import Board
+from code.algorithms.cl_player import test_game
+from code.algorithms.random_algo import random_traffic_control
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     # Parse the command line arguments
     args = parser.parse_args()
 
-    board_path = f"gameboards/{args.board}.csv"
+    board_path = f"data/gameboards/{args.board}.csv"
 
     # If the board does not exist, exit
     if not os.path.exists(board_path):

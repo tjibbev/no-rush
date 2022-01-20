@@ -1,4 +1,4 @@
-from board import Board
+from code.classes.board import Board
 
 def test_game(board):
     """Simple test game that moves cars on input"""

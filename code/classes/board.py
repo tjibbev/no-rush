@@ -1,69 +1,39 @@
 # Visualisering
 import csv
-from statistics import mode
-#from msilib.schema import SelfReg
-from cars import Car
+from string import whitespace
+from code.classes.cars import Car
 import copy
-import random
-from mesa import Agent, Model
-from mesa.time import RandomActivation
-from mesa.space import SingleGrid
-from mesa.datacollection import DataCollector
 
-
-class CarAgent(Agent):
-    def __init__(self, unique_id, model, letter, orientation, column, row, length):
-        super().__init__(unique_id, model)
-        self.model = model
-        self._id = unique_id
-        self._letter = letter 
-        self._orientation = orientation
-        self._coord = (int(row), int(column))
-        self._length = int(length)
-
-    def move(self, move):
-        x, y = self._coord
-        if self._orientation == 'H':
-            self._coord = (x, y + move) 
-        else:
-            self._coord = (x + move, y)
-
-
-class RushModel(Model):
+class Board:
     """Board containing multiple (moveable) cars on a grid"""
+
     def __init__(self, board_path, size):
         """
         Loads vehicles
         Creates empty board grid
         Loads vehicles onto board
         """
-        self.grid = SingleGrid(size, size, False)
-        self.schedule = RandomActivation(self)
-        self.running = True 
 
         self._size = size
         self._cars = {}
-        self._move_path = []
-        self._board_grid = []
-        self._empty_grid = []
+        self._color = {}
+        list_of_colors = [(0,255,255),(118,238,198),(0,0,255),(255,97,3),(118,238,0),(139,136,120),(104,34,139),(255,20,147),(255,215,0),(3,3,3),(191,239,255),(255,182,193),(238,238,209),(224,102,255),(227,168,105),(255,222,173),(128,128,0),(205,55,0),(152,251,152),(139,139,0),(245,222,179),(255,255,0),(238,130,238),(0,128,128)]
 
-        # open the gameboard file and intialize the CarAgents
+        # Obtain cars from csv file
         with open(board_path) as file:
             reader = csv.DictReader(file)
-            
-            id = 0
             for row in reader:
-                id += 1
-                car = CarAgent(id, self, row['car'], row['orientation'], row['col'], row['row'], row['length'])
-                self._cars[row['car']] = car
-                self.schedule.add(car)
+                self._cars[row['car']] = Car(row['car'], row['orientation'], row['col'], row['row'], row['length'])
+        
+        # Assign colors to the vehicles
+        for key in self._cars:
+            if key == "X":
+                self._color[key] = (255,0,0)
+            else:
+                self._color[key] = list_of_colors.pop()
 
-                if car._orientation == 'H':
-                    for i in range(car._length):
-                        self.grid.place_agent(car, (car._coord[1] + i - 1, car._coord[0] - 1))
-                else:
-                    for i in range(car._length):
-                        self.grid.place_agent(car, (car._coord[1] - 1, car._coord[0] + i - 1))
+        self._board_grid = []
+        self._empty_grid = []
 
         # create empty board grid
         for i in range(size):
@@ -71,7 +41,8 @@ class RushModel(Model):
             for i in range(size):
                 row_list.append(' ')
             self._empty_grid.append(row_list)
-
+        
+        # load cars onto board grid
         self.load_board()
         
 
@@ -89,6 +60,15 @@ class RushModel(Model):
             elif auto._orientation == 'V':
                 for i in range(auto._length):
                     self._board_grid[x-1+i][y-1] = auto._id
+
+
+    def visualize(self):
+        """Returns the board grid"""
+        return self._board_grid
+
+
+    def color(self):
+        return self._color
             
 
     def is_valid_move(self, carname, move):
@@ -126,24 +106,12 @@ class RushModel(Model):
     def move_car(self, carname, move):
         """Move car if possible"""
         if self.is_valid_move(carname, move):
-            car = self._cars[carname]
-            car.move(move)
+            self._cars[carname].move(move)
             self.load_board()
-
-            for i in range(car._length):
-                self.grid.remove_agent(car)
-
-            if car._orientation == 'H':
-                for i in range(car._length):
-                    self.grid.place_agent(car, (car._coord[1] + i - 1, car._coord[0] - 1))
-            else:
-                for i in range(car._length):
-                    self.grid.place_agent(car, (car._coord[1] - 1, car._coord[0] + i - 1))                
 
             return True
 
         return False
-
 
     def game_won(self):
         """Returns true if the red car has cleared traffic"""
@@ -154,7 +122,6 @@ class RushModel(Model):
         
         return False
 
-
     def after_win(self, movepath):
         """Prints winning status and makes output.csv"""
         if self.game_won():
@@ -164,42 +131,4 @@ class RushModel(Model):
                 writer = csv.DictWriter(file, fieldnames=['car', 'move'])
                 writer.writeheader()
                 writer.writerows(movepath)
-
-
-    def possibilities(self):
-        """Creates & returns dict containing all possible car movements"""
-        possibles = {}
-        for car in self._cars.keys():
-            length = self._cars[car]._length
-            car_possibilities = []
-            for move in range(- self._size + length, self._size - length + 1):
-                if self.is_valid_move(car, move):
-                    car_possibilities.append(move)
-            
-            # Add car only if moveable
-            if car_possibilities != []:
-                possibles[car] = car_possibilities
-
-        return possibles
-
-
-    def random_move(self):
-        options = self.possibilities()
-
-        car = random.choice(list(options.keys()))
-        move = random.choice(options[car])
-
-        self.move_car(car, move)
-
-        return car, move
-
-
-    def step(self):
-        self.schedule.step()
-
-        if not(self.game_won()):
-            carname, move = self.random_move()
-            self._move_path.append({'car': carname, 'move': move})
-        else:
-            self.after_win(self._move_path)
 
