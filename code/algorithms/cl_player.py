@@ -33,4 +33,4 @@ def test_game(board):
             print("Usage: X int")
             print("Make sure the car's initial and the movement integer are seperated by a space!")
 
-    board.after_win(move_path)
+    board.after_win(move_path, "cl")

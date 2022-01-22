@@ -45,6 +45,13 @@ class Board:
         # load cars onto board grid
         self.load_board()
         
+    # TODO: define __eq__
+
+    def __eq__(self, other):
+        if isinstance(other, Board):
+            return self._board_grid == other._board_grid
+            
+        return False
 
     def load_board(self):
         """Loads all cars to current positions on the board"""
@@ -124,6 +131,8 @@ class Board:
 
     def after_win(self, movepath, run_number):
         """Prints winning status, makes an output.csv and returns the solution length"""
+        sol_length = None
+
         if self.game_won():
             print()
             print("You completed the puzzle!")

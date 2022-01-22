@@ -27,7 +27,7 @@ def random_move(board):
 
     return car, move
 
-def random_traffic_control_long(board, sol_number, best_sol):
+def random_traffic_control_long(board, sol_number):
     """Creates a list of all the moves and returns the length of the solution"""
     move_path = []
 
