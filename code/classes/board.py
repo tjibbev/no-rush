@@ -44,8 +44,7 @@ class Board:
         
         # load cars onto board grid
         self.load_board()
-        
-    # TODO: define __eq__
+    
 
     def __eq__(self, other):
         if isinstance(other, Board):
@@ -69,6 +68,13 @@ class Board:
                     self._board_grid[x-1+i][y-1] = auto._id
 
 
+    def get_coord(self, row, column):
+        if row < 0 or column < 0:
+            return None
+        else:
+            return self._board_grid[row][column]
+
+
     def visualize(self):
         """Returns the board grid"""
         return self._board_grid
@@ -89,20 +95,20 @@ class Board:
 
         try:
             if car._orientation == 'H' and move < 0:
-                if all(self._board_grid[x-1][y-1+i] == ' ' for i in range(move, 0)):
+                if all(self.get_coord(x-1, y-1+i) == ' ' for i in range(move, 0)):
                     return True
             elif car._orientation == 'H' and move > 0:
                 if y - 1 + move + car._length > len(self._empty_grid):
                     return False
-                elif all(self._board_grid[x-1][y-1+i] == ' ' for i in range(car._length, car._length + move)):
+                elif all(self.get_coord(x-1, y-1+i) == ' ' for i in range(car._length, car._length + move)):
                     return True
             elif car._orientation == 'V' and move < 0:
-                if all(self._board_grid[x-1+i][y-1] == ' ' for i in range(move, 0)):
+                if all(self.get_coord(x-1+i, y-1) == ' ' for i in range(move, 0)):
                     return True
             elif car._orientation == 'V' and move > 0:
                 if x - 1 + move + car._length > len(self._empty_grid):
                     return False
-                elif all(self._board_grid[x-1+i][y-1] == ' ' for i in range(car._length, car._length + move)):
+                elif all(self.get_coord(x-1+i, y-1) == ' ' for i in range(car._length, car._length + move)):
                     return True
         except IndexError:
             return False
