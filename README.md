@@ -6,21 +6,21 @@ Using this program you can play the Rush Hour game on your own device. The goal 
 
 ## Requirements
 This codebase is dependend on the following requirements that can be installed as follows:
-Run requirements.txt using 'pip3 install -r requirements.txt'
+Run requirements.txt using `pip3 install -r requirements.txt`
 
 ## Working
 3. Run the programm using the preferred command:
-'python3 main.py board algoritme N'
+`python3 main.py board algoritme N`
 
-In which board can be any of the boars under data/gameboards, for example: 'Rushhour9x9_4'
-In which algoritme can be 'cl' (command line), 'rl' (random solutions), 'r' (random - cuts off longer solutions), 'br' (breadth first)
-In which N let's random algorithm run N times & chooses best solution
+- In which board can be any of the boars under data/gameboards, for example: 'Rushhour9x9_4'
+- In which algoritme can be 'cl' (command line), 'rl' (random solutions), 'r' (random - cuts off longer solutions), 'br' (breadth first)
+- In which N let's random algorithm run N times & chooses best solution
 
 ## Structure
 These are the files used in our project, listed as follows:
 
-/code: all the project's code
-/code/algorithms: all the used algorithms
-/code/classes: the several classes used in the project
-/code/visualisation: contains the visualisation code
-/data: contains the gameboards that can be used
+- /code: all the project's code
+- /code/algorithms: all the used algorithms
+- /code/classes: the several classes used in the project
+- /code/visualisation: contains the visualisation code
+- /data: contains the gameboards that can be used
