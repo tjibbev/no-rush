@@ -33,9 +33,9 @@ class Breadth:
             child = copy.deepcopy(state)
             child[0].move_car(car, move)
             child[1].append({'car': car, 'move': move})
-            if not(child in self.state_archive):
+            if all(state != child[0] for state in self.state_archive):
                 children.append(child)
-                self.state_archive.append(child)
+                self.state_archive.append(child[0])
 
         return children
 
@@ -47,6 +47,7 @@ class Breadth:
             for child in self.branching(state):
                 next_gen.append(child)
 
+        print(f"The next generation contains {len(next_gen)} states!")
         return next_gen
 
 
