@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     board=np.array(image)
     plt.imshow(board)
-    plt.savefig('test.png')
+    plt.savefig('./test/test.png')
     plt.show()
 
     if alg == 'cl':
