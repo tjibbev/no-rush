@@ -2,6 +2,7 @@
 import csv
 from string import whitespace
 from code.classes.cars import Car
+from ..visualisation.visualize_gif import gif_maker
 import copy
 import numpy as np
 
@@ -58,6 +59,7 @@ class Board:
         
         # load cars onto board grid
         self.load_board()
+        self._starting_board = self.visualize()
     
 
     def __eq__(self, other):
@@ -162,5 +164,8 @@ class Board:
                 writer.writerows(movepath)
             sol_length = len(movepath)
             print(f"in {sol_length} steps!")
+
+            gif_maker(self, movepath)
+            
         
         return sol_length
