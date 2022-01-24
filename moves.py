@@ -1,1 +1,0 @@
-# Berekenen van de moves
