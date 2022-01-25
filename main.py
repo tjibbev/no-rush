@@ -9,6 +9,8 @@ from code.algorithms.random_algo import random_traffic_control
 from code.algorithms.random_algo_long import random_traffic_control_long
 from code.algorithms.breadth_first import Breadth
 from code.visualisation.visualize_gif import gif_maker
+from code.algorithms.efficient_search import Efficient
+from code.algorithms.breadth_random import Breandom
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -101,6 +103,28 @@ if __name__ == "__main__":
 
         # run the algorithm
         solution = breadth_search.run()
+
+        gif_maker(solution[0], solution[1])
+
+    elif alg == 'e':
+        # --------------------------------------------------- EFFICIENT SEARCH ----------------------------------------------
+        # Initialize the board for an efficient search algorithm
+        board = Board(board_path, size)
+        efficient_search = Efficient(board)
+
+        # run the algorithm
+        solution = efficient_search.run()
+
+        gif_maker(solution[0], solution[1])
+
+    elif alg == 'rbr':
+        # --------------------------------------------------- BREADTH RANDOM ----------------------------------------------
+        # Initialize the board for a combined Breadth/random algorithm
+        board = Board(board_path, size)
+        brandom = Breandom(board)
+
+        # run the algorithm
+        solution = brandom.run()
 
         gif_maker(solution[0], solution[1])
 
