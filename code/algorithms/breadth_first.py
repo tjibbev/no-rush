@@ -45,9 +45,12 @@ class Breadth:
         next_gen = []
         for state in generation:
             for child in self.branching(state):
+                if child[0].game_won():
+                    return [child]
+                
                 next_gen.append(child)
 
-        print(f"The next generation contains {len(next_gen)} states!")
+        print(f"The next generation contains {len(next_gen)} new states!")
         return next_gen
 
 
