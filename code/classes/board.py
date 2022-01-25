@@ -146,7 +146,7 @@ class Board:
         """Returns true if the red car has cleared traffic"""
         red = self._cars['X']
 
-        if red._coord[1] == len(self._empty_grid) - 1:
+        if red._coord[1] == self._size - 1:
             return True
         
         return False
