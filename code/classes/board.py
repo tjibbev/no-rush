@@ -163,9 +163,6 @@ class Board:
                 writer.writeheader()
                 writer.writerows(movepath)
             sol_length = len(movepath)
-            print(f"in {sol_length} steps!")
-
-            gif_maker(self, movepath)
-            
+            print(f"in {sol_length} steps!")            
         
-        return sol_length
+        return self, movepath

@@ -1,4 +1,6 @@
 import copy
+
+from code.visualisation.visualize_gif import gif_maker
 from ..classes.board import Board
 
 class Breadth:
@@ -70,3 +72,5 @@ class Breadth:
 
         solution = self.found_solution(current_gen)
         solution[0].after_win(solution[1], "optimal")
+        
+        return solution

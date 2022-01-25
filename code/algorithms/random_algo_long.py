@@ -35,6 +35,6 @@ def random_traffic_control_long(board, sol_number):
         car, move = random_move(board)
         move_path.append({'car': car, 'move': move})
 
-    sol_length = board.after_win(move_path, sol_number)
+    solution = board.after_win(move_path, sol_number)
 
-    return sol_length
+    return solution

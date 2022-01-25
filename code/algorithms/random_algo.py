@@ -37,10 +37,10 @@ def random_traffic_control(board, sol_number, best_sol):
         car, move = random_move(board)
         move_path.append({'car': car, 'move': move})
         # check if length exceeds best solution's length
-        if len(move_path) > best_sol:
-            return 100000
+        if len(move_path) > len(best_sol[1]):
+            return best_sol
 
-    sol_length = board.after_win(move_path, sol_number)
+    solution = board.after_win(move_path, sol_number)
 
-    return sol_length
+    return solution
 

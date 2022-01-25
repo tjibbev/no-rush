@@ -64,4 +64,6 @@ def test_game(board):
             writer.append_data(image)
             os.remove(filename)
 
-    board.after_win(move_path, "cl")
+    solution = board.after_win(move_path, "cl")
+
+    return solution
