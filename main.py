@@ -44,20 +44,20 @@ if __name__ == "__main__":
     print()
     for row in B.visualize():
         print(row)
-        row_list = []
-        for position in row:
-            if position in B._color:
-                position = B.color()[position]
-            else:
-                position = (248,248,255)
-            row_list.append(position)
-        image.append(row_list)
+        # row_list = []
+        # for position in row:
+        #     if position in B._color:
+        #         position = B.color()[position]
+        #     else:
+        #         position = (248,248,255)
+        #     row_list.append(position)
+        # image.append(row_list)
     print()
 
-    board=np.array(image)
-    plt.imshow(board)
-    plt.savefig('test.png')
-    plt.show()
+    # board=np.array(image)
+    # plt.imshow(board)
+    # plt.savefig('./test/test.png')
+    # plt.show()
 
     if alg == 'cl':
         # -------------------------------------------------- COMMAND LINE GAME ---------------------------------------------
