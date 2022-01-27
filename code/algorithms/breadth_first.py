@@ -12,7 +12,7 @@ class Breadth:
         """ Initializes the starting board """
         self.starting_board = board
         self.size = board._size
-        self.state_archive = []
+        self.state_archive = set()
 
 
     def get_possibilities(self, state):
@@ -35,9 +35,9 @@ class Breadth:
             child = copy.deepcopy(state)
             child[0].move_car(car, move)
             child[1].append({'car': car, 'move': move})
-            if all(state != child[0] for state in self.state_archive):
+            if not(child[0].convert_to_string() in self.state_archive):
                 children.append(child)
-                self.state_archive.append(child[0])
+                self.state_archive.add(child[0].convert_to_string())
 
         return children
 
@@ -53,6 +53,8 @@ class Breadth:
                 next_gen.append(child)
 
         print(f"The next generation contains {len(next_gen)} new states!")
+        print(f"Archive total: {len(self.state_archive)}")
+        print()
         return next_gen
 
 

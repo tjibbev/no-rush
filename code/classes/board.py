@@ -68,6 +68,16 @@ class Board:
             
         return False
 
+
+    def convert_to_string(self):
+        board_str = ''
+        for row in self._board_grid:
+            row_str = ''.join(row)
+            board_str = board_str + row_str
+
+        return board_str
+
+
     def load_board(self):
         """Loads all cars to current positions on the board"""
         self._board_grid = copy.deepcopy(self._empty_grid)
