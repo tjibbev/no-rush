@@ -12,7 +12,7 @@ class Breadth:
         """ Initializes the starting board """
         self.starting_board = board
         self.size = board._size
-        self.state_archive = set()
+        self.state_archive = [set(), set(self.starting_board.convert_to_string()), set()]
 
 
     def get_possibilities(self, state):
@@ -31,19 +31,27 @@ class Breadth:
     def branching(self, state):
         """ Returns possible new states of board after 1 move """
         children = []
+
         for (car, move) in self.get_possibilities(state):
             child = copy.deepcopy(state)
             child[0].move_car(car, move)
             child[1].append({'car': car, 'move': move})
-            if not(child[0].convert_to_string() in self.state_archive):
+
+            string = child[0].convert_to_string()
+
+            if all(not(string in self.state_archive[i]) for i in [0, 1, 2]):
                 children.append(child)
-                self.state_archive.add(child[0].convert_to_string())
+                self.state_archive[2].add(string)
 
         return children
 
 
     def next_generation(self, generation):
         """ Returns the next generation of board states """
+        # Forget about the past generations grandparents
+        self.state_archive.pop(0)
+        self.state_archive.append(set())
+
         next_gen = []
         for state in generation:
             for child in self.branching(state):
@@ -53,7 +61,7 @@ class Breadth:
                 next_gen.append(child)
 
         print(f"The next generation contains {len(next_gen)} new states!")
-        print(f"Archive total: {len(self.state_archive)}")
+        print(f"Archive total: {len(self.state_archive[0]) + len(self.state_archive[1]) + len(self.state_archive[2])}")
         print()
         return next_gen
 
