@@ -1,4 +1,5 @@
 import copy
+import gc
 
 from code.visualisation.visualize_gif import gif_maker
 from ..classes.board import Board
@@ -12,7 +13,7 @@ class Breadth:
         """ Initializes the starting board """
         self.starting_board = board
         self.size = board._size
-        self.state_archive = [set(), set(self.starting_board.convert_to_string()), set()]
+        self.state_archive = [set(), set(), set(board.convert_to_string())]
 
 
     def get_possibilities(self, state):
@@ -63,6 +64,10 @@ class Breadth:
         print(f"The next generation contains {len(next_gen)} new states!")
         print(f"Archive total: {len(self.state_archive[0]) + len(self.state_archive[1]) + len(self.state_archive[2])}")
         print()
+
+        del generation[:]
+        gc.collect()
+
         return next_gen
 
 

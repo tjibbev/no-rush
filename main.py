@@ -11,6 +11,7 @@ from code.algorithms.breadth_first import Breadth
 from code.visualisation.visualize_gif import gif_maker
 from code.algorithms.efficient_search import Efficient
 from code.algorithms.breadth_random import Breandom
+from code.algorithms.a_star import Astar
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -128,7 +129,18 @@ if __name__ == "__main__":
 
         gif_maker(solution[0], solution[1])
 
+    elif alg == 'a':
+        # ---------------------------------------------------------- A*  ----------------------------------------------------------
+        # Initialize the board for an A* algorithm
+        board = Board(board_path, size)
+        astar_search = Astar(board)
+
+        # run the algorithm
+        solution = astar_search.run()
+
+        gif_maker(solution[0], solution[1])
+
     else:
-        print("Usage: python main.py board algorithm [N]")
-        print("algorithm must be one of 'cl' (command line), 'rl' (random solutions), 'r' (random - cuts off longer solutions), 'br' (breadth first)")
+        print("Usage: python main.py board algorithm [-N N]")
+        print("algorithm must be one of 'cl' (command line), 'rl' (random solutions), 'r' (random - cuts off longer solutions), 'br' (breadth first), 'e' (beam search), 'a' (a* algorithm)")
         print("N let's random algorithm run N times & chooses best solution")
