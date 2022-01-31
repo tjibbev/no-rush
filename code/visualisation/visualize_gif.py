@@ -34,15 +34,15 @@ def gif_maker(board, move_path):
 
         image_maker=np.array(image)
         plt.imshow(image_maker)
-        plt.savefig(f'./test/test{counter}.png')
+        plt.savefig(f'./visualisation/png-output/run{counter}.png')
         plt.show()
 
     end_gif(len(move_path))
 
 
 def end_gif(frames):
-    with imageio.get_writer('./test/mygif.gif', mode='I', fps = 1) as writer:
+    with imageio.get_writer('./output-gif.gif', mode='I', fps = 1) as writer:
         for frame in range(frames + 1):
-            image = imageio.imread(f"./test/test{frame}.png")
+            image = imageio.imread(f"./visualisation/png-output/{frame}.png")
             writer.append_data(image)
-            os.remove(f"./test/test{frame}.png")
+            os.remove(f"./visualisation/png-output/{frame}.png")
