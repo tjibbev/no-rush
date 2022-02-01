@@ -11,6 +11,9 @@ RUN_TIME = 5
 # chosen board
 BOARD = "Rushhour4x4_0"
 
+# the index of a value times 10 gives you the filter value
+lengths_list = []
+
 for filter in range(0,100,10):
         start = time.time()
         n_runs = 0
@@ -24,8 +27,16 @@ for filter in range(0,100,10):
         f.close()
         fr = open(f"results_efficient_{filter}.txt", "r")
         print("")
-        print(f"number of solutions: {len(fr.readlines())}")
+        length = len(fr.readlines())
+        lengths_list.append(length)
+        print(lengths_list)
+        print(f"number of solutions: {length}")
         print("")
         f.close()
 
+max_value = max(lengths_list)
+index = lengths_list.index(max_value)
+filter_value = int(index) * 10
+
+print(f"The best filter value is: {filter_value}")
 
