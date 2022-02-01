@@ -28,6 +28,10 @@ These are the files used in our project, listed as follows:
 - /presentation: contains several image outputs used in the presentation
 
 ## Automatic results
-By running the several auto scripts the different algorithms will automatically be run and filtered for the best result. These results will be output to a file and can then be compared. Run:
+By running the auto script of an algorithm, the algorithm will automatically be run for a certain amount of time and the solution lengths will be saved to a file. The random algorithm will be filtered for the best result. The algorithms can now be compared. Run:
+- auto_random_run.py
 - auto_breadth_first.py
-- tune_efficient_search.py
+- auto_a_star.py
+
+By running the the tune script of efficient_search.py, you find out what the best filter value is per board. Run:
+- tune_efficient_search.py (TO DO: this is not working yet..)
