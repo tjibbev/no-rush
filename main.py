@@ -13,7 +13,7 @@ from code.algorithms.efficient_search import Efficient
 from code.algorithms.breadth_random import Breandom
 from code.algorithms.a_star import Astar
 import matplotlib.pyplot as plt
-import numpy as np
+import numpy as np 
 
 
 if __name__ == "__main__":
@@ -23,6 +23,7 @@ if __name__ == "__main__":
     parser.add_argument("algorithm", help="The algorithm to be used")
     parser.add_argument("-N", required=False, default=1, help="The number of times to run the algorithm.")
     parser.add_argument("--no-gif", dest="no_gif", action="store_const", const=True, default=False, help="Prevent making GIF (default: False")
+    parser.add_argument("---F", required=False, default=50, help="The filter value when running efficient algorithm.")
 
     # Parse the command line arguments
     args = parser.parse_args()
@@ -44,16 +45,19 @@ if __name__ == "__main__":
     if size == 1:
         size = 12
 
+    # Determine filter value (when using efficient algorithm)
+    filter = int(args.F)
+
     # Load the Rush Hour board
     B = Board(board_path, size)
 
     image = []
 
     # Present the Rush Hour board to the user
-    print()
-    for row in B.visualize():
-        print(row)
-    print()
+   #print()
+    #for row in B.visualize():
+    #    print(row)
+   # print()
 
 
     if alg == 'cl':
@@ -75,7 +79,7 @@ if __name__ == "__main__":
             # generate new board
             B = Board(board_path, size)
         
-        print(f"Best solution: {len(best_sol[1])}")
+       # print(f"Best solution: {len(best_sol[1])}")
         gif_maker(best_sol[0], best_sol[1])
 
     elif alg == 'r':
@@ -93,8 +97,10 @@ if __name__ == "__main__":
             # generate new board
             B = Board(board_path, size)
         
-        print(f"Best solution: {len(best_sol[1])}")
+        #print(f"Best solution: {len(best_sol[1])}")
         gif_maker(best_sol[0], best_sol[1])
+
+        
 
     elif alg == 'br':
         # --------------------------------------------------- BREADTH FIRST ----------------------------------------------
@@ -111,7 +117,7 @@ if __name__ == "__main__":
         # --------------------------------------------------- EFFICIENT SEARCH ----------------------------------------------
         # Initialize the board for an efficient search algorithm
         board = Board(board_path, size)
-        efficient_search = Efficient(board)
+        efficient_search = Efficient(board, filter)
 
         # run the algorithm
         solution = efficient_search.run()
