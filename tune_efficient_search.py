@@ -32,7 +32,7 @@ for filter in range(0,100,10):
         print(lengths_list)
         print(f"number of solutions: {length}")
         print("")
-        f.close()
+        fr.close()
 
 max_value = max(lengths_list)
 index = lengths_list.index(max_value)
