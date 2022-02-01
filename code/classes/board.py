@@ -166,13 +166,14 @@ class Board:
         sol_length = None
 
         if self.game_won():
-            print()
-            print("You completed the puzzle!")
+           # print()
+          #  print("You completed the puzzle!")
             with open(f"output_{run_number}.csv", 'w', newline='') as file:
                 writer = csv.DictWriter(file, fieldnames=['car', 'move'])
                 writer.writeheader()
                 writer.writerows(movepath)
             sol_length = len(movepath)
-            print(f"in {sol_length} steps!")            
+           # print(f"in {sol_length} steps!") 
+            print(sol_length)           
         
         return self, movepath
