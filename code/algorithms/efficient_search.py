@@ -5,6 +5,7 @@ from .breadth_first import Breadth
 
 
 def heuristiek(board):
+    """ Returns a number that indicates how many moves are possible """
     valid_moves = possibilities(board)
 
     total_valids = 0
