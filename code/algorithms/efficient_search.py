@@ -17,13 +17,13 @@ def heuristiek(board):
 
 class Efficient(Breadth):
     """ Trying to build a more efficient version of breadth-first search """
-    def __init__(self, board):
+    def __init__(self, board, filter):
         """ Initializes the starting board """
         self.starting_board = board
         self.size = board._size
         self.state_archive = [set(), set(), set(board.convert_to_string())]
         self._generations = []
-        self._filter = 50
+        self._filter = filter
         self._backtrack_number = 2
 
 
