@@ -21,7 +21,7 @@ for filter in range(0,100,10):
         while time.time() - start < TOTAL_RUN_TIME:
             print(f"run: {n_runs}")
             f = open(f"results_efficient_{filter}.txt", "a")
-            subprocess.call(["timeout", f"{RUN_TIME}", "python3", "main.py", f"{BOARD}", "e", "--no-gif"], stdout=f)
+            subprocess.call(["timeout", f"{RUN_TIME}", "python3", "main.py", f"{BOARD}", "e", "--no-gif", f"---F {filter}"], stdout=f)
             n_runs += 1
         f.close()
 
