@@ -61,9 +61,9 @@ class Breadth:
                 
                 next_gen.append(child)
 
-        print(f"The next generation contains {len(next_gen)} new states!")
-        print(f"Archive total: {len(self.state_archive[0]) + len(self.state_archive[1]) + len(self.state_archive[2])}")
-        print()
+       # print(f"The next generation contains {len(next_gen)} new states!")
+       # print(f"Archive total: {len(self.state_archive[0]) + len(self.state_archive[1]) + len(self.state_archive[2])}")
+       # print()
 
         del generation[:]
         gc.collect()
