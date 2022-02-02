@@ -1,6 +1,7 @@
 # Het input gedeelte, initialisatie programma.
 
 import argparse
+import copy
 import os
 import sys
 from code.classes.board import Board
@@ -21,8 +22,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Solve Rush Hour.')
     parser.add_argument("board", help="The board to be solved.")
     parser.add_argument("algorithm", help="The algorithm to be used")
-    parser.add_argument("-N", required=False, default=1, help="The number of times to run the algorithm.")
+    parser.add_argument("-N", required=False, default=1, help="The number of times to run the random algorithm.")
     parser.add_argument("--no-gif", dest="no_gif", action="store_const", const=True, default=False, help="Prevent making GIF (default: False")
+    parser.add_argument("--use-random", dest="solution_given", action="store_const", const=True, default=False, help="Use random to search for a solution, lets a* use secon heuristic")
     parser.add_argument("-F", required=False, default=50, help="The filter value when running efficient algorithm.")
     parser.add_argument("-when-to-cut", required=False, default=800, help="The when_to_cut value when running breandom algorithm.")
     parser.add_argument("-cutback-val", required=False, default=5, help="The cutback value when running breandom algorithm.")
@@ -145,7 +147,19 @@ if __name__ == "__main__":
         # ---------------------------------------------------------- A*  ----------------------------------------------------------
         # Initialize the board for an A* algorithm
         board = Board(board_path, size)
-        astar_search = Astar(board)
+
+        if args.solution_given:
+            # Initialise random algorithm
+            random_board = copy.deepcopy(board)
+
+            # Run random algorithm
+            solution = random_traffic_control_long(B, 0)[0]
+
+            # Initialise A* (use the 'difference' heuristic)
+            astar_search = Astar(board, solution=solution)
+        else:
+            # Initialise A* (use the 'obstacle_count' heuristic)
+            astar_search = Astar(board)
 
         # run the algorithm
         solution = astar_search.run()
