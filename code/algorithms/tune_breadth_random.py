@@ -22,7 +22,7 @@ for when_to_cut in range(800,1000,100):
             while time.time() - start < TOTAL_RUN_TIME:
                 print(f"run: {n_runs}")
                 f = open(f"results_efficient_{filter}.txt", "a")
-                subprocess.call(["timeout", f"{RUN_TIME}", "python3", "main.py", f"{BOARD}", "rbr", "--no-gif", f"-when_to_cut {when_to_cut}", f"-cutback_val {cutback_val}"], stdout=f)
+                subprocess.call(["timeout", f"{RUN_TIME}", "python3", "main.py", f"{BOARD}", "rbr", "--no-gif", "-when_to_cut", f"{when_to_cut}", "-cutback_val", f"{cutback_val}"], stdout=f)
                 n_runs += 1
             f.close()
 
