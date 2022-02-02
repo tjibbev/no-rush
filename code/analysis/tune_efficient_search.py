@@ -3,13 +3,14 @@
 
 import subprocess
 import time
+import os
 
 # total running time for each filter value
-TOTAL_RUN_TIME = 60
+TOTAL_RUN_TIME = 600
 # the maximum time available per run 
-RUN_TIME = 20
+RUN_TIME = 600
 # chosen board
-BOARD = "Rushhour4x4_0"
+BOARD = "Rushhour6x6_1"
 
 # list of lengths of the solution length files per filter
 lengths_list = []
@@ -17,11 +18,12 @@ lengths_list = []
 for filter in range(0,100,10):
         start = time.time()
         n_runs = 0
+        os.chdir("../..")
 
         while time.time() - start < TOTAL_RUN_TIME:
             print(f"run: {n_runs}")
             f = open(f"results_efficient_{filter}.txt", "a")
-            subprocess.call(["timeout", f"{RUN_TIME}", "python3", "main.py", f"{BOARD}", "e", "--no-gif", f"---F {filter}"], stdout=f)
+            subprocess.call(["timeout", f"{RUN_TIME}", "python3", "main.py", f"{BOARD}", "e", "--no-gif", f"-F {filter}"], stdout=f)
             n_runs += 1
         f.close()
 
