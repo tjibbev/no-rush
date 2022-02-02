@@ -23,7 +23,9 @@ if __name__ == "__main__":
     parser.add_argument("algorithm", help="The algorithm to be used")
     parser.add_argument("-N", required=False, default=1, help="The number of times to run the algorithm.")
     parser.add_argument("--no-gif", dest="no_gif", action="store_const", const=True, default=False, help="Prevent making GIF (default: False")
-    parser.add_argument("---F", required=False, default=50, help="The filter value when running efficient algorithm.")
+    parser.add_argument("-F", required=False, default=50, help="The filter value when running efficient algorithm.")
+    parser.add_argument("-when_to_cut", required=False, default=800, help="The when_to_cut value when running breandom algorithm.")
+    parser.add_argument("-cutback_val", required=False, default=5, help="The cutback value when running breandom algorithm.")
 
     # Parse the command line arguments
     args = parser.parse_args()
@@ -47,6 +49,10 @@ if __name__ == "__main__":
 
     # Determine filter value (when using efficient algorithm)
     filter = int(args.F)
+
+    # Determine the when_to_cut value and cutback value (when using breandom algorithm)
+    when_to_cut = int(args.when_to_cut)
+    cutback_val = int(args.cutback_val)
 
     # Load the Rush Hour board
     B = Board(board_path, size)
@@ -128,7 +134,7 @@ if __name__ == "__main__":
         # --------------------------------------------------- BREADTH RANDOM ----------------------------------------------
         # Initialize the board for a combined Breadth/random algorithm
         board = Board(board_path, size)
-        brandom = Breandom(board)
+        brandom = Breandom(board, when_to_cut, cutback_val)
 
         # run the algorithm
         solution = brandom.run()
