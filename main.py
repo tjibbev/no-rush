@@ -24,8 +24,8 @@ if __name__ == "__main__":
     parser.add_argument("-N", required=False, default=1, help="The number of times to run the algorithm.")
     parser.add_argument("--no-gif", dest="no_gif", action="store_const", const=True, default=False, help="Prevent making GIF (default: False")
     parser.add_argument("-F", required=False, default=50, help="The filter value when running efficient algorithm.")
-    parser.add_argument("-when_to_cut", required=False, default=800, help="The when_to_cut value when running breandom algorithm.")
-    parser.add_argument("-cutback_val", required=False, default=5, help="The cutback value when running breandom algorithm.")
+    parser.add_argument("-when-to-cut", required=False, default=800, help="The when_to_cut value when running breandom algorithm.")
+    parser.add_argument("-cutback-val", required=False, default=5, help="The cutback value when running breandom algorithm.")
 
     # Parse the command line arguments
     args = parser.parse_args()
