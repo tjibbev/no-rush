@@ -4,6 +4,7 @@
 import subprocess
 import time
 import csv
+import os
 
 # total running time max (10h)
 TOTAL_RUN_TIME = 18000
@@ -11,7 +12,7 @@ TOTAL_RUN_TIME = 18000
 # The first three boards
 BOARDS = ["Rushhour6x6_1", "Rushhour6x6_2", "Rushhour6x6_3"]
 
-
+os.chdir("../..")
 f = open("data/br_vs_a.txt", "w")
 
 for board_path in BOARDS:
