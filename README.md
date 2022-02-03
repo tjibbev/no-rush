@@ -24,12 +24,12 @@ Run the programm using the preferred command:
 
 ## Algorithms
 In the programm there are several algorithms that can be used as input.
-- Random long (All the possible moves of a board are saved to a dictionary, and one is picked randomly. This is repeated untill the puzzle is completed).
-- - Random (Works the same as Random long when it is run one time. But when the N parameter is added, it keeps track of the fastest solution thus far and any time it exceeds that number of moves it stops and goes to the next run).
-- Breadth first (Each run gives the best possible solution to solve the puzzle. Walks through the tree of possible states from left to right. It's slow and takes up a lot of memory).
-- Efficient search (Uses a heuristic - number of valid moves of a board - and a filter value - percentage of boards that is thrown away based on the heuristic).
-- Combined Breadth/random (Uses breadth first algorithm untill the number of states exceeds a certain value. From this point random search is used).
-- A* ()
+- **Random long** (All the possible moves of a board are saved to a dictionary, and one is picked randomly. This is repeated untill the puzzle is completed).
+- **Random** (Works the same as Random long when it is run one time. But when the N parameter is added, it keeps track of the fastest solution thus far and any time it exceeds that number of moves it stops and goes to the next run).
+- **Breadth first** (Each run gives the best possible solution to solve the puzzle. Walks through the tree of possible states from left to right. It's slow and takes up a lot of memory).
+- **Efficient search** (Uses a heuristic - number of valid moves of a board - and a filter value - percentage of boards that is thrown away based on the heuristic).
+- **Combined Breadth/random** (Uses breadth first algorithm untill the number of states exceeds a certain value. From this point random search is used).
+- **A*** ()
 
 ## Structure
 These are the files used in our project, listed as follows:
