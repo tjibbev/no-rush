@@ -4,9 +4,10 @@ Welcome to the Rush Hour game, designed by the No-Rush team!
 ## Sumary
 Using this program you can play the Rush Hour game on your own device. The goal is to get the red vehicle to the exit as soon as possible. The goal of this project is to implement several algorithms that can solve the puzzles on their own. This is a challenging task as boards will grow in size and so do the possible solutions. This means that it is our task to find the fastest working algorithm, which can be running for hours before a solution is found. With this project we aim to provide the user with those algorithms and enable them to compare the outputs.
 
-<img src="./presentation/rush-hour.jpg?raw=true" height="280" alt="Rush Hour board"><img src="./presentation/solution3.gif?raw=true" height="280" alt="Rush Hour board visualisation">
+<p align="center"><img src="./presentation/rush-hour.jpg?raw=true" height="280" alt="Rush Hour board"><img src="./presentation/solution3.gif?raw=true" height="280" alt="Rush Hour board visualisation"></p>
 
-(Left: Rush Hour gameboard. Right: Visualisation of our program, finding a solution).
+
+<p align="center">(Left: Rush Hour gameboard. Right: Visualisation of our program, finding a solution).</p>
 
 ## Requirements
 This codebase is dependend on the following requirements that can be installed as follows:
