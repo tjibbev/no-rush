@@ -4,6 +4,10 @@ Welcome to the Rush Hour game, designed by the No-Rush team!
 ## Sumary
 Using this program you can play the Rush Hour game on your own device. The goal is to get the red vehicle to the exit as soon as possible. The goal of this project is to implement several algorithms that can solve the puzzles on their own. This is a challenging task as boards will grow in size and so do the possible solutions. This means that it is our task to find the fastest working algorithm, which can be running for hours before a solution is found. With this project we aim to provide the user with those algorithms and enable them to compare the outputs.
 
+<img src="./presentation/rush-hour.jpg?raw=true" height="360" alt="Rush Hour board"><img src="./presentation/solution3.gif?raw=true" height="400" alt="Rush Hour board visualisation">
+
+(Left: Rush Hour gameboard. Right: Visualisation of our program, finding a solution).
+
 ## Requirements
 This codebase is dependend on the following requirements that can be installed as follows:
 - Run requirements.txt using `pip3 install -r requirements.txt`
@@ -43,8 +47,12 @@ By running the auto script of an algorithm, the algorithm will automatically be 
 - auto_a_star.py
 - br_vs_astar.py
 - tune_breadth_random.py
-- tune_efficient_search.py
+- tune_efficient_search.py (By running the the tune script of efficient_search.py, you find out what the best filter value is per board.)
 - auto_random_run.py
 
-By running the the tune script of efficient_search.py, you find out what the best filter value is per board. Run:
-- tune_efficient_search.py (TO DO: this is not working yet..)
+## No Rush Team
+Lance van Duin
+Tjibbe Valkenburg
+Doena van den Hoven
+
+
