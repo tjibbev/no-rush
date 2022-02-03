@@ -32,7 +32,7 @@ class Efficient(Breadth):
             prev_gen = self._generations.pop()
         
         self._backtrack_number = self._backtrack_number * 2
-        self._filter = self._filter / 2
+        self._filter = self._filter / 2.0
 
         return prev_gen
 
@@ -52,7 +52,7 @@ class Efficient(Breadth):
 
         children.sort(key=lambda t: heuristiek(t[0]))
 
-        number_of_drops = int(len(children) * self._filter / 100)
+        number_of_drops = int(len(children) * self._filter / 100.0)
         del children[:number_of_drops]
 
         self.state_archive.pop()
