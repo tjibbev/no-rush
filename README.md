@@ -31,7 +31,7 @@ In the programm there are several algorithms that can be used as input.
 - **Combined Breadth/random** (Uses breadth first algorithm untill the number of states exceeds a certain value. From this point random search is used).
 - **A*** (The best solution using heuristics is being found at the corner of the board, after which its childrens are then subject to the heuristic, untill a solution is found).
 
-<img src="./presentationa-star-tree.jpeg" alt="a* picture" width="100"/>
+<img src="./presentation/a-star-tree.jpeg" alt="a* picture" width="100"/>
 
 ## Structure
 These are the files used in our project, listed as follows:
