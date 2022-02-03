@@ -39,9 +39,12 @@ These are the files used in our project, listed as follows:
 
 ## Automatic results
 By running the auto script of an algorithm, the algorithm will automatically be run for a certain amount of time and the solution lengths will be saved to a file. The random algorithm will be filtered for the best result. The algorithms can now be compared. Run:
-- auto_random_run.py
 - auto_breadth_first.py
 - auto_a_star.py
+- br_vs_astar.py
+- tune_breadth_random.py
+- tune_efficient_search.py
+- auto_random_run.py
 
 By running the the tune script of efficient_search.py, you find out what the best filter value is per board. Run:
 - tune_efficient_search.py (TO DO: this is not working yet..)
