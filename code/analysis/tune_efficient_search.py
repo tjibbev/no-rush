@@ -4,11 +4,14 @@
 import subprocess
 import time
 import os
+import gc
+
+from matplotlib.pyplot import pause
 
 # total running time for each filter value
-TOTAL_RUN_TIME = 10
+TOTAL_RUN_TIME = 1800
 # the maximum time available per run 
-RUN_TIME = 5
+RUN_TIME = 1801
 # chosen board
 BOARD = "Rushhour6x6_1"
 
@@ -18,13 +21,18 @@ lengths_list = []
 for filter in range(0,100,10):
         start = time.time()
         n_runs = 0
-        os.chdir("../..")
+        f = open(f"results_efficient_{filter}.txt", "a")
 
         while time.time() - start < TOTAL_RUN_TIME:
+            time_left = RUN_TIME - time.time() + start
             print(f"run: {n_runs}")
-            f = open(f"results_efficient_{filter}.txt", "a")
-            subprocess.call(["timeout", f"{RUN_TIME}", "python3", "main.py", f"{BOARD}", "e", "--no-gif", f"-F {filter}"], stdout=f)
+            
+            subprocess.call(["timeout", f"{time_left}", "python3", "main.py", f"{BOARD}", "e", "--no-gif", f"-F {filter}"], stdout=f)
+
+            gc.collect()
+            
             n_runs += 1
+
         f.close()
 
         # determine the length of the file
