@@ -29,7 +29,7 @@ In the programm there are several algorithms that can be used as input.
 - **Breadth first** (Each run gives the best possible solution to solve the puzzle. Walks through the tree of possible states from left to right. It's slow and takes up a lot of memory).
 - **Efficient search** (Uses a heuristic - number of valid moves of a board - and a filter value - percentage of boards that is thrown away based on the heuristic).
 - **Combined Breadth/random** (Uses breadth first algorithm untill the number of states exceeds a certain value. From this point random search is used).
-- **A*** ()
+- **A*** (The best solution using heuristics is being found at the corner of the board, after which its childrens are then subject to the heuristic, untill a solution is found).
 
 ## Structure
 These are the files used in our project, listed as follows:
@@ -46,14 +46,12 @@ These are the files used in our project, listed as follows:
 By running the auto script of an algorithm, the algorithm will automatically be run for a certain amount of time and the solution lengths will be saved to a file. The random algorithm will be filtered for the best result. The algorithms can now be compared. Run:
 - auto_breadth_first.py
 - auto_a_star.py
-- br_vs_astar.py
+- br_vs_astar.py (Breadth first and a* algorithms are executed and the results are compared within one script).
 - tune_breadth_random.py
-- tune_efficient_search.py (By running the the tune script of efficient_search.py, you find out what the best filter value is per board.)
+- tune_efficient_search.py (By running the the tune script of efficient_search.py, you find out what the best filter value is per board).
 - auto_random_run.py
 
 ## No Rush Team
-Lance van Duin
-Tjibbe Valkenburg
-Doena van den Hoven
+Lance van Duin, Tjibbe Valkenburg and Doena van den Hoven.
 
 
