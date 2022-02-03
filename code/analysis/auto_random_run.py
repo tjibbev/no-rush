@@ -4,6 +4,7 @@
 import subprocess
 import time
 import csv
+import os
 
 # total running time for each filter value
 TOTAL_RUN_TIME = 60
@@ -14,6 +15,7 @@ BOARD = "Rushhour4x4_0"
 
 start = time.time()
 n_runs = 0
+os.chdir("../..")
 
 while time.time() - start < TOTAL_RUN_TIME:
     print(f"run: {n_runs}")

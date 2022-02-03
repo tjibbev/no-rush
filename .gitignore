@@ -8,3 +8,7 @@ output_optimal.csv
 output_cl.csv
 test/mygif.gif
 results.txt
+code/results_a_star.txt
+results_a_star.txt
+results_random.txt
+code/analysis/results_random.txt

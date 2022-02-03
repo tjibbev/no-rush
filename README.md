@@ -33,6 +33,7 @@ These are the files used in our project, listed as follows:
     - /code/algorithms: all the used algorithms
     - /code/classes: the several classes used in the project
     - /code/visualisation: contains the visualisation code
+    - /code/analysis: contains the code to execute analysis with
 - /data: contains the gameboards that can be used
 - /presentation: contains several image outputs used in the presentation
 

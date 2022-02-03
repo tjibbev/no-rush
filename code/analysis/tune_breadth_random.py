@@ -3,6 +3,7 @@
 
 import subprocess
 import time
+import os
 
 # total running time for each filter value
 TOTAL_RUN_TIME = 10
@@ -18,6 +19,7 @@ for when_to_cut in range(800,1000,100):
     for cutback_val in range(5,8,1):
             start = time.time()
             n_runs = 0
+            os.chdir("../..")
 
             while time.time() - start < TOTAL_RUN_TIME:
                 print(f"run: {n_runs}")

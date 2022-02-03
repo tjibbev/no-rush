@@ -2,7 +2,8 @@ from ..classes.board import Board
 import copy
 import heapq
 
-def heuristiek(bord):
+def obstacle_count(bord):
+    """" This heuristic gives a score to a board based on the amount of cars which are blocking the red cars exit. """
     reds_coords = bord._cars['X']._coord
     lane = bord._board_grid[reds_coords[0] - 1]
 
@@ -14,10 +15,38 @@ def heuristiek(bord):
     return count
 
 
+def difference(bord, solution):
+    """" 
+    To be used when a solution of the board is given.
+    This heuristic scores a board based on its difference compared to a solved board.
+    """
+
+    difference = 0
+
+    for carname in bord._cars:
+        car = bord._cars[carname]
+        difference += abs(car._coord[0] - solution._cars[carname]._coord[0]) + abs(car._coord[1] - solution._cars[carname]._coord[1])
+    
+    return difference
+
+
 class heap_prepare:
-    def __init__(self, state) -> None:
+    """" 
+    This class prepares a state (a movepath + a board) to put in in the heapq.
+    There are two possible heuristics one can use.
+    The heuristic is chosen through the Astar class
+    """
+
+    def __init__(self, state, solution=None) -> None:
+        """ Initialise the heap_prepare class """
         self.state = state
-        self.heap_score = len(state[0]) + heuristiek(state[1])
+
+        # Use the second heuristic if a solution is given
+        if solution:
+            self.heap_score = len(state[0]) + difference(state[1], solution)
+        # Otherwise use the first heuristic
+        else:
+            self.heap_score = len(state[0]) + obstacle_count(state[1])
 
     def __lt__(self, other):
         if self.heap_score == other.heap_score:
@@ -33,11 +62,17 @@ class heap_prepare:
 
 
 class Astar:
-    def __init__(self, board) -> None:
+    """ 
+    The A* algorithm can be regarded as a smartly expanding oil stain. 
+    Makes the oil stain smart by using a heuristic
+    """
+    def __init__(self, board, solution=None) -> None:
+        """ Initialise the A* algorithm """
         self.starting_board = copy.deepcopy(board)
         self.size = board._size
         self.archive = {}
         self.winning_board = (board, [])
+        self.solution = solution
 
 
     def get_possibilities(self, state):
@@ -54,6 +89,7 @@ class Astar:
 
 
     def select(self, heap):
+        """ Selects direction for oil stane to expand """
         selected = heapq.heappop(heap)
 
         if selected[1][1].game_won():
@@ -68,8 +104,8 @@ class Astar:
 
 
     def expand(self, heap,  heapstate):
+        """Expands the oil stane """
         state = heapstate[1]
-        children = []
 
         for (car, move) in self.get_possibilities(state):
             child = copy.deepcopy(state)
@@ -79,11 +115,12 @@ class Astar:
             string = child[1].convert_to_string()
 
             if not(string in self.archive):
-                heapq.heappush(heap, heap_prepare(child))
+                heapq.heappush(heap, heap_prepare(child, self.solution))
 
 
     def run(self):
-        heap = [heap_prepare(([], self.starting_board))]
+        """ Runs the A* algorithm """
+        heap = [heap_prepare(([], self.starting_board), self.solution)]
         heapq.heapify(heap)
 
         while self.select(heap):
