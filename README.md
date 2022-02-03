@@ -30,6 +30,7 @@ In the programm there are several algorithms that can be used as input.
 - **Efficient search** (Uses a heuristic - number of valid moves of a board - and a filter value - percentage of boards that is thrown away based on the heuristic).
 - **Combined Breadth/random** (Uses breadth first algorithm untill the number of states exceeds a certain value. From this point random search is used).
 - **A*** (The best solution using heuristics is being found at the corner of the board, after which its childrens are then subject to the heuristic, untill a solution is found).
+![a* picture](presentation/a-star-tree.jpeg)
 
 ## Structure
 These are the files used in our project, listed as follows:
