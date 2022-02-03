@@ -11,7 +11,7 @@ TOTAL_RUN_TIME = 60
 # the maximum time available per run 
 RUN_TIME = 30
 # chosen board
-BOARD = "Rushhour4x4_0"
+BOARD = "Rushhour6x6_1"
 
 start = time.time()
 n_runs = 0
@@ -30,12 +30,14 @@ fr = open(f"results_random.txt", "r")
 length = len(fr.readlines())
 
 rows = []
-reader = csv.reader(fr, delimiter=" ")
-for row in reader:
-    rows.append(row)
+with open('results_random.txt') as csvfile:
+    reader = csv.reader(csvfile, delimiter=" ")
+    for row in reader:
+        print(row)
+        rows.append(row[0])
 fr.close()
 best_sol = min(rows)
 
 # print result
 print(f"number of solutions: {length}")
-print(f"best solution length:{best_sol}")
+print(f"best solution length: {best_sol}")

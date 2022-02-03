@@ -14,11 +14,11 @@ BOARD = "Rushhour6x6_1"
 
 # list of lengths of the solution length files per filter
 lengths_list = []
+os.chdir("../..")
 
 for filter in range(0,100,10):
         start = time.time()
         n_runs = 0
-        os.chdir("../..")
 
         while time.time() - start < TOTAL_RUN_TIME:
             print(f"run: {n_runs}")
