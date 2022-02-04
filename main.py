@@ -1,5 +1,7 @@
-""" Main.py handles the input from the user and executes the scripts accordingly """
-""" It connects all the different classes, functions and algorithms """
+""" 
+Main.py handles the input from the user and executes the scripts accordingly 
+It connects all the different classes, functions and algorithms 
+"""
 
 import argparse
 import copy
@@ -63,10 +65,10 @@ if __name__ == "__main__":
     image = []
 
     # Present the Rush Hour board to the user
-   #print()
+    #print()
     #for row in B.visualize():
     #    print(row)
-   # print()
+    # print()
 
 
     if alg == 'cl':
