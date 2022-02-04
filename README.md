@@ -54,7 +54,7 @@ By running the auto script of an algorithm, the algorithm will automatically be 
 
 ## No Rush Team
 - Lance van Duin, [@Lancelot81](https://www.github.com/Lancelot81)
-- Tjibbe Valkenburg [@tjibbev](https://github.com/tjibbev)
-- Doena van den Hoven [@DoenaH](https://github.com/DoenaH)
+- Tjibbe Valkenburg, [@tjibbev](https://github.com/tjibbev)
+- Doena van den Hoven, [@DoenaH](https://github.com/DoenaH)
 
 
