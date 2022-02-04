@@ -1,11 +1,15 @@
 from numpy import average
-from code.classes.board import Board
 import copy
 from .breadth_first import Breadth
 from .random_algo_long import random_move
 
+
 class Breandom(Breadth):
-    """ Trying to build a more efficient version of breadth-first search """
+    """
+    Trying to build a more efficient version of breadth-first search
+    Note: This algorithm does not always work properly
+    """
+
     def __init__(self, board, when_to_cut, cutback_val):
         """ Initializes the starting board """
         self.starting_board = board
@@ -16,6 +20,7 @@ class Breandom(Breadth):
         self.cutback_val = cutback_val
 
     def custom_filter(self, list_of_states):
+        """ Custom filter chooses to focus on some states based on the heuristic """
         scores = []
         for state in list_of_states:
             board = copy.deepcopy(state[0])
@@ -26,9 +31,9 @@ class Breandom(Breadth):
                 while not(board.game_won()):
                     car, move = random_move(board)
                     movecount += 1
-                
+
                 random_lengths.append(movecount)
-            
+
             state_score = average(random_lengths)
             scores.append((state, state_score))
 
@@ -40,8 +45,8 @@ class Breandom(Breadth):
 
         return next_gen
 
-
     def run(self):
+        """ Runs the algorithm """
         current_gen = [(copy.deepcopy(self.starting_board), [])]
 
         while not(self.found_solution(current_gen)):
@@ -50,8 +55,7 @@ class Breandom(Breadth):
             else:
                 current_gen = self.custom_filter(current_gen)
 
-        
         solution = self.found_solution(current_gen)
         solution[0].after_win(solution[1], "semi-optimal")
-        
+
         return solution

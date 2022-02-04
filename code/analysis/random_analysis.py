@@ -18,7 +18,7 @@ for i in range(N):
 
     elapsed = stop - start
     length = len(solution[1])
-    
+
     lengths.append(length)
     times.append(elapsed)
 

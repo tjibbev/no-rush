@@ -1,4 +1,8 @@
-""" Make a GIF from existing csv file """
+"""
+Make a GIF from existing csv file.
+Choose csv file and board path (see line 30) before running.
+Run from main directory using python3 code/visualisation/make_gif.py
+"""
 
 import sys
 from pathlib import Path
@@ -10,13 +14,10 @@ if __name__ == '__main__' and __package__ is None:
     sys.path.append(str(top))
     try:
         sys.path.remove(str(parent))
-    except ValueError: # Already removed
+    except ValueError:  # Already removed
         pass
 
-    import no_rush.code.visualisation
     __package__ = 'no_rush.code.visualisation'
-
-    from ... import module
 
     from ..visualisation.visualize_gif import gif_maker
     from ..classes.board import Board
@@ -29,7 +30,6 @@ if __name__ == '__main__' and __package__ is None:
     size = 6
 
     board = Board(board_path, size)
-
 
     move_path = []
     with open(csv_file, 'r') as f:

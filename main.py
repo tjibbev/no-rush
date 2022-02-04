@@ -1,6 +1,6 @@
-""" 
-Main.py handles the input from the user and executes the scripts accordingly 
-It connects all the different classes, functions and algorithms 
+"""
+Main.py handles the input from the user and executes the scripts accordingly
+It connects all the different classes, functions and algorithms
 """
 
 import argparse
@@ -16,8 +16,6 @@ from code.visualisation.visualize_gif import gif_maker
 from code.algorithms.efficient_search import Efficient
 from code.algorithms.breadth_random import Breandom
 from code.algorithms.a_star import Astar
-import matplotlib.pyplot as plt
-import numpy as np 
 
 
 if __name__ == "__main__":
@@ -26,10 +24,12 @@ if __name__ == "__main__":
     parser.add_argument("board", help="The board to be solved.")
     parser.add_argument("algorithm", help="The algorithm to be used")
     parser.add_argument("-N", required=False, default=1, help="The number of times to run the random algorithm.")
-    parser.add_argument("--no-gif", dest="no_gif", action="store_const", const=True, default=False, help="Prevent making GIF (default: False")
-    parser.add_argument("--use-random", dest="solution_given", action="store_const", const=True, default=False, help="Use random to search for a solution, lets a* use secon heuristic")
+    parser.add_argument("--no-gif", dest="no_gif", action="store_const", const=True,
+                        default=False, help="Prevent making GIF (default: False")
+    parser.add_argument("--use-random", dest="solution_given", action="store_const", const=True,
+                        default=False, help="Use random to search for a solution, lets a* use secon heuristic")
     parser.add_argument("-F", required=False, default=50, help="The filter value when running efficient algorithm.")
-    parser.add_argument("-when-to-cut", required=False, default=800, help="The when_to_cut value when running breandom algorithm.")
+    parser.add_argument("-when-to-cut", required=False, default=800, help="when_to_cut value when running breandom algorithm.")
     parser.add_argument("-cutback-val", required=False, default=5, help="The cutback value when running breandom algorithm.")
 
     # Parse the command line arguments
@@ -38,6 +38,7 @@ if __name__ == "__main__":
     board_path = f"data/gameboards/{args.board}.csv"
     alg = args.algorithm.lower()
     N = int(args.N)
+
     if args.no_gif:
         def gif_maker(board, move_path):
             pass
@@ -64,12 +65,11 @@ if __name__ == "__main__":
 
     image = []
 
-    # Present the Rush Hour board to the user
-    #print()
-    #for row in B.visualize():
+    # # Present the Rush Hour board to the user
+    # print()
+    # for row in B.visualize():
     #    print(row)
     # print()
-
 
     if alg == 'cl':
         # -------------------------------------------------- COMMAND LINE GAME ---------------------------------------------
@@ -89,12 +89,11 @@ if __name__ == "__main__":
 
             # generate new board
             B = Board(board_path, size)
-        
-       # print(f"Best solution: {len(best_sol[1])}")
+
         gif_maker(best_sol[0], best_sol[1])
 
     elif alg == 'r':
-    # -------------------------------------------------- RANDOM ALGORITHM  ----------------------------------------------------
+        # -------------------------------------------------- RANDOM ALGORITHM  -------------------------------------
         sol_list = []
         # let the best solution temporarily be 100000
         best_sol = 0, '0' * 100000
@@ -107,11 +106,9 @@ if __name__ == "__main__":
 
             # generate new board
             B = Board(board_path, size)
-        
-        #print(f"Best solution: {len(best_sol[1])}")
-        gif_maker(best_sol[0], best_sol[1])
 
-        
+        # print(f"Best solution: {len(best_sol[1])}")
+        gif_maker(best_sol[0], best_sol[1])
 
     elif alg == 'br':
         # --------------------------------------------------- BREADTH FIRST ----------------------------------------------
@@ -147,7 +144,7 @@ if __name__ == "__main__":
         gif_maker(solution[0], solution[1])
 
     elif alg == 'a':
-        # ---------------------------------------------------------- A*  ----------------------------------------------------------
+        # ------------------------------------------------ A*  ------------------------------
         # Initialize the board for an A* algorithm
         board = Board(board_path, size)
 
@@ -171,5 +168,6 @@ if __name__ == "__main__":
 
     else:
         print("Usage: python main.py board algorithm [-N N]")
-        print("algorithm must be one of 'cl' (command line), 'rl' (random solutions), 'r' (random - cuts off longer solutions), 'br' (breadth first), 'e' (beam search), 'a' (a* algorithm)")
+        print("algorithm must be one of 'cl' (command line), 'rl' (random solutions), " +
+              "'r' (random - cuts off longer solutions), 'br' (breadth first), 'e' (beam search), 'a' (a* algorithm)")
         print("N let's random algorithm run N times & chooses best solution")

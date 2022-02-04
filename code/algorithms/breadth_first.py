@@ -1,20 +1,15 @@
 import copy
 import gc
 
-from code.visualisation.visualize_gif import gif_maker
-from ..classes.board import Board
 
 class Breadth:
-    """
-    Class that searches for solutions breadth first
-    """
+    """ Class that searches for solutions breadth first """
 
     def __init__(self, board):
         """ Initializes the starting board """
         self.starting_board = board
         self.size = board._size
         self.state_archive = [set(), set(), set(board.convert_to_string())]
-
 
     def get_possibilities(self, state):
         """ Returns possible moves for some board """
@@ -25,9 +20,8 @@ class Breadth:
             for move in range(- self.size + length, self.size - length + 1):
                 if state[0].is_valid_move(car, move):
                     options.append((car, move))
-        
-        return options
 
+        return options
 
     def branching(self, state):
         """ Returns possible new states of board after 1 move """
@@ -46,7 +40,6 @@ class Breadth:
 
         return children
 
-
     def next_generation(self, generation):
         """ Returns the next generation of board states """
         # Forget about the past generations grandparents
@@ -58,28 +51,31 @@ class Breadth:
             for child in self.branching(state):
                 if child[0].game_won():
                     return [child]
-                
+
                 next_gen.append(child)
 
-       # print(f"The next generation contains {len(next_gen)} new states!")
-       # print(f"Archive total: {len(self.state_archive[0]) + len(self.state_archive[1]) + len(self.state_archive[2])}")
-       # print()
+        # print(f"The next generation contains {len(next_gen)} new states!")
+        # print(f"Archive total: {len(self.state_archive[0]) + len(self.state_archive[1]) + len(self.state_archive[2])}")
+        # print()
 
         del generation[:]
         gc.collect()
 
         return next_gen
 
-
     def found_solution(self, current_gen):
+        """ Check if the current generation contains a solution """
         for state in current_gen:
             if state[0].game_won():
                 return state
 
         return None
-    
 
     def run(self):
+        """
+        Run the breadth first algorithm
+        Returns the solution and its length
+        """
         current_gen = [(copy.deepcopy(self.starting_board), [])]
 
         while not(self.found_solution(current_gen)):
@@ -87,5 +83,5 @@ class Breadth:
 
         solution = self.found_solution(current_gen)
         solution[0].after_win(solution[1], "optimal")
-        
+
         return solution

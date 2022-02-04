@@ -1,9 +1,8 @@
 import csv
-from string import whitespace
 from .cars import Car
-from ..visualisation.visualize_gif import gif_maker
 import copy
 import numpy as np
+
 
 class Board:
     """Board containing multiple (moveable) cars on a grid"""
@@ -25,16 +24,16 @@ class Board:
             reader = csv.DictReader(file)
             for row in reader:
                 self._cars[row['car']] = Car(row['car'], row['orientation'], row['col'], row['row'], row['length'])
-        
+
         # Generate different colors up to 12x12 board
         for loop in range(144):
             color = tuple(np.random.choice(range(256), size=3))
 
             if color in list_of_colors:
                 pass
-            if color in (248,248,255):
+            if color in (248, 248, 255):
                 pass
-            if color in (255,0,0):
+            if color in (255, 0, 0):
                 pass
             else:
                 list_of_colors.append(color)
@@ -42,7 +41,7 @@ class Board:
         # Assign colors to the vehicles
         for key in self._cars:
             if key == "X":
-                self._color[key] = (255,0,0)
+                self._color[key] = (255, 0, 0)
             else:
                 self._color[key] = list_of_colors.pop()
 
@@ -55,20 +54,20 @@ class Board:
             for i in range(size):
                 row_list.append(' ')
             self._empty_grid.append(row_list)
-        
+
         # load cars onto board grid
         self.load_board()
         self._starting_board = self.visualize()
-    
 
     def __eq__(self, other):
+        """ Two boards are equal when their grids are equal """
         if isinstance(other, Board):
             return self._board_grid == other._board_grid
-            
+
         return False
 
-
     def convert_to_string(self):
+        """ Convert board to string using its gird (used for hashing) """
         board_str = ''
         for row in self._board_grid:
             row_str = ''.join(row)
@@ -76,9 +75,8 @@ class Board:
 
         return board_str
 
-
     def load_board(self):
-        """Loads all cars to current positions on the board"""
+        """ Loads all cars to current positions on the board """
         self._board_grid = copy.deepcopy(self._empty_grid)
 
         for car in self._cars:
@@ -92,30 +90,26 @@ class Board:
                 for i in range(auto._length):
                     self._board_grid[x-1+i][y-1] = auto._id
 
-
     def get_coord(self, row, column):
         if row < 0 or column < 0:
             return None
         else:
             return self._board_grid[row][column]
 
-
     def visualize(self):
-        """Returns the board grid"""
+        """ Returns the board grid """
         return self._board_grid
-
 
     def color(self):
         return self._color
-            
 
     def is_valid_move(self, carname, move):
-        """Checks if car can be moved"""
+        """ Checks if car can be moved """
         try:
             car = self._cars[carname]
         except KeyError:
             return False
-            
+
         x, y = car._coord
 
         try:
@@ -137,12 +131,11 @@ class Board:
                     return True
         except IndexError:
             return False
-        
+
         return False
 
-    
     def move_car(self, carname, move):
-        """Move car if possible"""
+        """ Move car if possible """
         if self.is_valid_move(carname, move):
             self._cars[carname].move(move)
             self.load_board()
@@ -152,27 +145,27 @@ class Board:
         return False
 
     def game_won(self):
-        """Returns true if the red car has cleared traffic"""
+        """ Returns true if the red car has cleared traffic """
         red = self._cars['X']
 
         if red._coord[1] == self._size - 1:
             return True
-        
+
         return False
 
     def after_win(self, movepath, run_number):
-        """Prints winning status, makes an output.csv and returns the solution length"""
+        """ Prints winning status, makes an output.csv and returns the solution + its length """
         sol_length = None
 
         if self.game_won():
-           # print()
-          #  print("You completed the puzzle!")
+            # print()
+            # print("You completed the puzzle!")
             with open(f"output_{run_number}.csv", 'w', newline='') as file:
                 writer = csv.DictWriter(file, fieldnames=['car', 'move'])
                 writer.writeheader()
                 writer.writerows(movepath)
             sol_length = len(movepath)
-           # print(f"in {sol_length} steps!") 
-            print(sol_length)           
-        
+            # print(f"in {sol_length} steps!")
+            print(sol_length)
+
         return self, movepath

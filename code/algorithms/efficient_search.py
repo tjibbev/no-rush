@@ -1,4 +1,3 @@
-from code.classes.board import Board
 import copy
 from code.algorithms.random_algo import possibilities
 from .breadth_first import Breadth
@@ -16,7 +15,7 @@ def heuristiek(board):
 
 
 class Efficient(Breadth):
-    """ Trying to build a more efficient version of breadth-first search """
+    """ Tries to build a more efficient version of breadth-first search """
     def __init__(self, board, filter):
         """ Initializes the starting board """
         self.starting_board = board
@@ -26,11 +25,11 @@ class Efficient(Breadth):
         self._filter = filter
         self._backtrack_number = 2
 
-
     def back_track(self):
+        """ Used to go back some amount of steps when a dead end is reached """
         for i in range(self._backtrack_number):
             prev_gen = self._generations.pop()
-        
+
         self._backtrack_number = self._backtrack_number * 2
         self._filter = self._filter / 2.0
 
@@ -60,8 +59,8 @@ class Efficient(Breadth):
 
         return children
 
-
     def run(self):
+        """ Runs the efficien_search algorithm """
         current_gen = [(copy.deepcopy(self.starting_board), [])]
 
         while not(self.found_solution(current_gen)):
@@ -70,8 +69,8 @@ class Efficient(Breadth):
             if current_gen == []:
                 print("backtracking...")
                 current_gen = self.back_track()
-        
+
         solution = self.found_solution(current_gen)
         solution[0].after_win(solution[1], "semi-optimal")
-        
+
         return solution

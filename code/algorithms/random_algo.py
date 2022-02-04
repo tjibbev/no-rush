@@ -1,5 +1,5 @@
-from operator import pos
 import random
+
 
 def possibilities(board):
     """Creates & returns dict containing all possible car movements"""
@@ -10,7 +10,7 @@ def possibilities(board):
         for move in range(- board._size + length, board._size - length + 1):
             if board.is_valid_move(car, move):
                 car_possibilities.append(move)
-        
+
         # Add car only if moveable
         if car_possibilities != []:
             possibles[car] = car_possibilities
@@ -19,6 +19,7 @@ def possibilities(board):
 
 
 def random_move(board):
+    """ Moves a random car by a random amount of steps """
     options = possibilities(board)
 
     car = random.choice(list(options.keys()))
@@ -30,7 +31,11 @@ def random_move(board):
 
 
 def random_traffic_control(board, sol_number, best_sol):
-    """Creates a list of all the moves and returns the length of the solution"""
+    """
+    Randomly moves cars till the puzzle is solved
+    Stops solving when more moves are done than in best_sol
+    Return solved board and the board path
+    """
     move_path = []
 
     while not(board.game_won()):
@@ -43,4 +48,3 @@ def random_traffic_control(board, sol_number, best_sol):
     solution = board.after_win(move_path, sol_number)
 
     return solution
-

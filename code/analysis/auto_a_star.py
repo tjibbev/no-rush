@@ -1,14 +1,15 @@
-""" Runs a_star.py for TOTAL_RUN_TIME seconds and creates a text file with the solution lengths"""
-""" The length of the file tells us how fast the algorithm is: the longer the faster """
+"""
+Runs a_star.py for TOTAL_RUN_TIME seconds and creates a text file with the solution lengths
+The length of the file tells us how fast the algorithm is: the longer the faster
+"""
 
 import subprocess
 import time
-import csv
 import os
 
 # total running time for each filter value
 TOTAL_RUN_TIME = 60
-# the maximum time available per run 
+# the maximum time available per run
 RUN_TIME = 30
 # chosen board
 BOARD = "Rushhour4x4_0"
@@ -25,7 +26,7 @@ while time.time() - start < TOTAL_RUN_TIME:
 f.close()
 
 # determine the length of the file
-fr = open(f"results_a_star.txt", "r")
+fr = open("results_a_star.txt", "r")
 length = len(fr.readlines())
 f.close()
 
