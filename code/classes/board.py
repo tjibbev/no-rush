@@ -1,7 +1,6 @@
-# Visualisering
 import csv
 from string import whitespace
-from code.classes.cars import Car
+from .cars import Car
 from ..visualisation.visualize_gif import gif_maker
 import copy
 import numpy as np
